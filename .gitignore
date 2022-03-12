@@ -1,0 +1,8 @@
+.vagrant
+.ssh
+*.o
+runtime/
+server
+.idea
+*.log
+*.tmp

@@ -1,4 +1,11 @@
 Various things discovered during testing:
 
-Header files don't have header guards
-Some game files are dynamically loaded at runtime, probably can just be static?  Not sure really.
+- Header files don't have header guards
+
+- Some game files are dynamically loaded at runtime, probably can just be static?  Not sure really.
+  At least for now -static seems to potentially break some things
+
+- Might not be compatible with glibc 2.32+ due to pthread_sigmask issue.  Dynamic/Static linking issue?
+  Nah, need -pthread CFLAG and -lpthread LDFLAG
+
+-
