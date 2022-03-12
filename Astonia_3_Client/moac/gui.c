@@ -2899,7 +2899,7 @@ int client_cmd(char *buf)
 		return 1;
         }
 	if (strcasestr(buf,password)) {
-		addline("°c3Sorry, but you are not allowed to say your password. No matter what you're promised, do not give your password to anyone! The only things which happened to players who did are: Loss of all items, lots of negative experience, bad karma and locked characters. If you really, really think you have to tell your password to someone, then I'm sure you'll find a way around this block.");
+		addline("ï¿½c3Sorry, but you are not allowed to say your password. No matter what you're promised, do not give your password to anyone! The only things which happened to players who did are: Loss of all items, lots of negative experience, bad karma and locked characters. If you really, really think you have to tell your password to someone, then I'm sure you'll find a way around this block.");
 		return 1;
 	}
 #ifdef EDITOR
@@ -3183,7 +3183,7 @@ void gui_keyproc(int wparam)
         }
 }
 
-LRESULT FAR PASCAL _export main_wnd_proc(HWND wnd, UINT msg,WPARAM wparam, LPARAM lparam)
+int main_wnd_proc(HWND wnd, UINT msg,WPARAM wparam, LPARAM lparam)
 {
 	PAINTSTRUCT ps;
         char buf[1024];

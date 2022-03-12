@@ -1628,7 +1628,7 @@ static void scale_image(IMAGE *image,int scale)
 			low_x=1-high_x;
 			low_y=1-high_y;
 
-			irgb=image->rgb[floor(ix)+floor(iy)*image->xres];
+			irgb=image->rgb[(int)(floor(ix)+floor(iy)*image->xres)];
 
 			if (irgb==rgbcolorkey) {
 				dbr=0;
@@ -1640,10 +1640,10 @@ static void scale_image(IMAGE *image,int scale)
 				dbg=IGET_G(irgb)*low_x*low_y;
 				dbb=IGET_B(irgb)*low_x*low_y;
 				if (!image->a) dba=31*low_x*low_y;
-				else dba=image->a[floor(ix)+floor(iy)*image->xres]*low_x*low_y;
+				else dba=image->a[(int)(floor(ix)+floor(iy)*image->xres)]*low_x*low_y;
 			}
 
-			irgb=image->rgb[ceil(ix)+floor(iy)*image->xres];
+			irgb=image->rgb[(int)(ceil(ix)+floor(iy)*image->xres)];
 
 			if (irgb==rgbcolorkey) {
 				dbr+=0;
@@ -1655,10 +1655,10 @@ static void scale_image(IMAGE *image,int scale)
 				dbg+=IGET_G(irgb)*high_x*low_y;
 				dbb+=IGET_B(irgb)*high_x*low_y;
 				if (!image->a) dba+=31*high_x*low_y;
-				else dba+=image->a[ceil(ix)+floor(iy)*image->xres]*high_x*low_y;
+				else dba+=image->a[(int)(ceil(ix)+floor(iy)*image->xres)]*high_x*low_y;
 			}
 
-			irgb=image->rgb[floor(ix)+ceil(iy)*image->xres];
+			irgb=image->rgb[(int)(floor(ix)+ceil(iy)*image->xres)];
 
 			if (irgb==rgbcolorkey) {
 				dbr+=0;
@@ -1670,10 +1670,10 @@ static void scale_image(IMAGE *image,int scale)
 				dbg+=IGET_G(irgb)*low_x*high_y;
 				dbb+=IGET_B(irgb)*low_x*high_y;
 				if (!image->a) dba+=31*low_x*high_y;
-				else dba+=image->a[floor(ix)+ceil(iy)*image->xres]*low_x*high_y;
+				else dba+=image->a[(int)(floor(ix)+ceil(iy)*image->xres)]*low_x*high_y;
 			}
 
-			irgb=image->rgb[ceil(ix)+ceil(iy)*image->xres];
+			irgb=image->rgb[(int)(ceil(ix)+ceil(iy)*image->xres)];
 
 			if (irgb==rgbcolorkey) {
 				dbr+=0;
@@ -1686,7 +1686,7 @@ static void scale_image(IMAGE *image,int scale)
 				dbb+=IGET_B(irgb)*high_x*high_y;
 				
 				if (!image->a) dba+=31*high_x*high_y;
-				else dba+=image->a[ceil(ix)+ceil(iy)*image->xres]*high_x*high_y;
+				else dba+=image->a[(int)(ceil(ix)+ceil(iy)*image->xres)]*high_x*high_y;
 			}
 
 

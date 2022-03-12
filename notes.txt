@@ -8,4 +8,10 @@ Various things discovered during testing:
 - Might not be compatible with glibc 2.32+ due to pthread_sigmask issue.  Dynamic/Static linking issue?
   Nah, need -pthread CFLAG and -lpthread LDFLAG
 
--
+- Client is not cross-compiled, it is compiled on a windows machine with
+  borland by default.  Might require significant work.
+  e.g. windows.h included
+
+- Direct Draw Lib is deprecated and might need to be replaced
+  - e.g. OpenGL, just use Java
+  - Also figure out how to link zlib and png on mingw

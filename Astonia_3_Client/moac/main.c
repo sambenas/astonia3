@@ -14,9 +14,12 @@
 #include "sound.h"
 #include "gui.h"
 
+// TODO: Figure out where this needs to be defined
+#define GCL_HICON -14
+
 // extern
 
-extern LRESULT FAR PASCAL _export main_wnd_proc(HWND wnd, UINT msg,WPARAM wparam, LPARAM lparam);
+extern LONG_PTR main_wnd_proc(HWND wnd, UINT msg,WPARAM wparam, LPARAM lparam);
 extern int main_init(void);
 extern void main_exit(void);
 
@@ -692,7 +695,7 @@ int parse_cmd(char *s)
 
 // windows
 
-LRESULT FAR PASCAL _export main_wnd_proc_safe(HWND wnd, UINT msg,WPARAM wparam, LPARAM lparam)
+LONG_PTR main_wnd_proc_safe(HWND wnd, UINT msg,WPARAM wparam, LPARAM lparam)
 {
         switch(msg) {
                 case WM_DESTROY:

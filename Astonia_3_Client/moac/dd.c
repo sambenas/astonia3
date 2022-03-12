@@ -18,6 +18,33 @@ DDFONT *fontb_framed=NULL;
 DDFONT *fontc_shaded=NULL;
 DDFONT *fontc_framed=NULL;
 
+struct vid_cache
+{
+	unsigned char cs;
+	unsigned char dx,dy;
+
+	unsigned short px,py;
+        unsigned short size;
+
+	unsigned short vidx;		// index into vidx array of sprite which is using this entry
+	unsigned int sidx;		// index nr. of sprite which is using this entry
+
+	struct vid_cache *next;         // large cache: next entry in large list
+					// small cache: next entry in free list
+
+	struct vid_cache *prev;		// large cache: previous entry in large list
+					// small cache: previous entry in free list
+
+	struct vid_cache *child;	// large cache: first child
+					// small cache: next child
+
+	struct vid_cache *parent;	// large cache: unused
+					// small cache: parent
+
+	unsigned int used,tick,junk;
+	unsigned int value;
+};
+
 void dd_create_font(void);
 void dd_init_text(void);
 void dd_black(void);
@@ -254,16 +281,16 @@ static char *ddsdstr(char *buf, DDSURFACEDESC *ddsd)
         else if (ddsd->ddsCaps.dwCaps&DDSCAPS_SYSTEMMEMORY) memstr="systemmemory";
         else memstr="funnymemory";
 
-        bpp=ddsd->ddpfPixelFormat.u1.dwRGBBitCount;
-        if (bpp) pitch=ddsd->u1.lPitch/(bpp/8); else pitch=-1;
+        bpp=ddsd->ddpfPixelFormat.dwRGBBitCount;
+        if (bpp) pitch=ddsd->lPitch/(bpp/8); else pitch=-1;
 
         sprintf(buf,"%dx%dx%d %s (pitch=%d) (%08X,%08X,%08X)",
                 ddsd->dwWidth,ddsd->dwHeight,bpp,
                 memstr,
                 pitch,
-                ddsd->ddpfPixelFormat.u2.dwRBitMask, // binstr(rbuf,ddsd->ddpfPixelFormat.u2.dwRBitMask,bpp),
-                ddsd->ddpfPixelFormat.u3.dwGBitMask, // binstr(gbuf,ddsd->ddpfPixelFormat.u3.dwGBitMask,bpp),
-                ddsd->ddpfPixelFormat.u4.dwBBitMask  // binstr(bbuf,ddsd->ddpfPixelFormat.u4.dwBBitMask,bpp)
+                ddsd->ddpfPixelFormat.dwRBitMask, // binstr(rbuf,ddsd->ddpfPixelFormat.dwRBitMask,bpp),
+                ddsd->ddpfPixelFormat.dwGBitMask, // binstr(gbuf,ddsd->ddpfPixelFormat.dwGBitMask,bpp),
+                ddsd->ddpfPixelFormat.dwBBitMask  // binstr(bbuf,ddsd->ddpfPixelFormat.dwBBitMask,bpp)
         );
 
         return buf;
@@ -281,9 +308,9 @@ static int dd_vidmembytes(LPDIRECTDRAWSURFACE sur)
 
         if (ddsd.ddsCaps.dwCaps&DDSCAPS_SYSTEMMEMORY) return 0; // if it's not there, it has to be in video memory - works for funnymemory as well
 
-        // note("%dx%d,%d,%d",ddsd.dwHeight,ddsd.dwWidth,ddsd.u1.lPitch/2,ddsd.u1.lPitch);
+        // note("%dx%d,%d,%d",ddsd.dwHeight,ddsd.dwWidth,ddsd.lPitch/2,ddsd.lPitch);
 
-        return ddsd.dwHeight*ddsd.u1.lPitch;
+        return ddsd.dwHeight*ddsd.lPitch;
 }
 
 static int ddcs_set_info(int s, int usemem,int xmax,int ymax)
@@ -299,7 +326,7 @@ static int ddcs_set_info(int s, int usemem,int xmax,int ymax)
         note("ddcs[%d] is %s",s,ddsdstr(buf,&ddsd));
 	
         ddcs_usemem[s]=usemem;
-        ddcs_xres[s]=ddsd.u1.lPitch/2;
+        ddcs_xres[s]=ddsd.lPitch/2;
         ddcs_yres[s]=ddsd.dwHeight;
 	ddcs_xmax[s]=xmax;
         ddcs_ymax[s]=ymax;
@@ -396,12 +423,12 @@ int dd_init(int width, int height)
                 ddsd.dwFlags=DDSD_ALL;
                 if ((err=dd->lpVtbl->GetDisplayMode(dd,&ddsd))!=DD_OK) return dd_error("GetDisplayMode()",err);
                 note("mode %s",ddsdstr(buf,&ddsd));
-                R_MASK=ddsd.ddpfPixelFormat.u2.dwRBitMask;
-                G_MASK=ddsd.ddpfPixelFormat.u3.dwGBitMask;
-                B_MASK=ddsd.ddpfPixelFormat.u4.dwBBitMask;
+                R_MASK=ddsd.ddpfPixelFormat.dwRBitMask;
+                G_MASK=ddsd.ddpfPixelFormat.dwGBitMask;
+                B_MASK=ddsd.ddpfPixelFormat.dwBBitMask;
                 XRES=ddsd.dwWidth;
                 YRES=ddsd.dwHeight;
-                BPP=ddsd.ddpfPixelFormat.u1.dwRGBBitCount;
+                BPP=ddsd.ddpfPixelFormat.dwRGBBitCount;
         }
 
         // you can force any screen (and offscreen) size
@@ -438,20 +465,20 @@ int dd_init(int width, int height)
                 ddsd.dwHeight=YRES;
                 ddsd.ddpfPixelFormat.dwSize=sizeof(ddsd.ddpfPixelFormat);
                 ddsd.ddpfPixelFormat.dwFlags=DDPF_RGB;
-                ddsd.ddpfPixelFormat.u1.dwRGBBitCount=16;
+                ddsd.ddpfPixelFormat.dwRGBBitCount=16;
                 if (BPP==16) {
                         // current
-                        ddsd.ddpfPixelFormat.u2.dwRBitMask=R_MASK;
-                        ddsd.ddpfPixelFormat.u3.dwGBitMask=G_MASK;
-                        ddsd.ddpfPixelFormat.u4.dwBBitMask=B_MASK;
-                        ddsd.ddpfPixelFormat.u5.dwRGBAlphaBitMask=0;
+                        ddsd.ddpfPixelFormat.dwRBitMask=R_MASK;
+                        ddsd.ddpfPixelFormat.dwGBitMask=G_MASK;
+                        ddsd.ddpfPixelFormat.dwBBitMask=B_MASK;
+                        ddsd.ddpfPixelFormat.dwRGBAlphaBitMask=0;
                 }
                 else {
                         // RGBM_R5G6B5
-                        ddsd.ddpfPixelFormat.u2.dwRBitMask=0xF800;
-                        ddsd.ddpfPixelFormat.u3.dwGBitMask=0x07E0;
-                        ddsd.ddpfPixelFormat.u4.dwBBitMask=0x001F;
-                        ddsd.ddpfPixelFormat.u5.dwRGBAlphaBitMask=0;
+                        ddsd.ddpfPixelFormat.dwRBitMask=0xF800;
+                        ddsd.ddpfPixelFormat.dwGBitMask=0x07E0;
+                        ddsd.ddpfPixelFormat.dwBBitMask=0x001F;
+                        ddsd.ddpfPixelFormat.dwRGBAlphaBitMask=0;
                 }
                 if ((err=dd->lpVtbl->CreateSurface(dd,&ddsd,&ddbs,NULL))!=DD_OK) return dd_error("CreateSurface(ddbs)",err);    // create Backsurface
 
@@ -489,7 +516,7 @@ int dd_init(int width, int height)
         ddsd.dwSize=sizeof(ddsd);
         ddsd.dwFlags=DDSD_ALL;
         if ((err=dd->lpVtbl->GetDisplayMode(dd,&ddsd))!=DD_OK) return dd_error("GetDisplayMode()",err);
-        if (ddsd.ddpfPixelFormat.u1.dwRGBBitCount!=16) note("16 bit display modes might be faster"); // return dd_error("need a 16bit screen mode",-1);
+        if (ddsd.ddpfPixelFormat.dwRGBBitCount!=16) note("16 bit display modes might be faster"); // return dd_error("need a 16bit screen mode",-1);
         note("ddps %s",ddsdstr(buf,&ddsd));
 
         // get informations about the back surface
@@ -499,14 +526,14 @@ int dd_init(int width, int height)
 	if ((err=ddbs->lpVtbl->GetSurfaceDesc(ddbs,&ddsd))!=DD_OK) return dd_error("GetSurfaceDesc(ddbs)",err);
 	note("ddbs is %s",ddsdstr(buf,&ddsd));
         dd_usevidmem=ddsd.ddsCaps.dwCaps&DDSCAPS_VIDEOMEMORY;
-	xres=ddsd.u1.lPitch/2;
+	xres=ddsd.lPitch/2;
 	yres=ddsd.dwHeight;
-        BPP=ddsd.ddpfPixelFormat.u1.dwRGBBitCount;
+        BPP=ddsd.ddpfPixelFormat.dwRGBBitCount;
 
         if (!(ddsd.ddpfPixelFormat.dwFlags&DDPF_RGB)) return dd_error("CANNOT HANDLE PIXEL FORMAT",-1);
-        R_MASK=ddsd.ddpfPixelFormat.u2.dwRBitMask;
-        G_MASK=ddsd.ddpfPixelFormat.u3.dwGBitMask;
-        B_MASK=ddsd.ddpfPixelFormat.u4.dwBBitMask;
+        R_MASK=ddsd.ddpfPixelFormat.dwRBitMask;
+        G_MASK=ddsd.ddpfPixelFormat.dwGBitMask;
+        B_MASK=ddsd.ddpfPixelFormat.dwBBitMask;
 
         if (R_MASK==0xF800 && G_MASK==0x07E0 && B_MASK==0x001F) { rgbm=RGBM_R5G6B5; D_MASK=0xE79C; }
         else if (R_MASK==0x7C00 && G_MASK==0x03E0 && B_MASK==0x001F) { rgbm=RGBM_X1R5G5B5; D_MASK=0x739C; }
@@ -541,11 +568,11 @@ int dd_init(int width, int height)
                         ddsd.dwHeight=restab[r][1];
                         ddsd.ddpfPixelFormat.dwSize=sizeof(ddsd.ddpfPixelFormat);
                         ddsd.ddpfPixelFormat.dwFlags=DDPF_RGB;
-                        ddsd.ddpfPixelFormat.u1.dwRGBBitCount=BPP;
-                        ddsd.ddpfPixelFormat.u2.dwRBitMask=R_MASK;
-                        ddsd.ddpfPixelFormat.u3.dwGBitMask=G_MASK;
-                        ddsd.ddpfPixelFormat.u4.dwBBitMask=B_MASK;
-                        ddsd.ddpfPixelFormat.u5.dwRGBAlphaBitMask=0;
+                        ddsd.ddpfPixelFormat.dwRGBBitCount=BPP;
+                        ddsd.ddpfPixelFormat.dwRBitMask=R_MASK;
+                        ddsd.ddpfPixelFormat.dwGBitMask=G_MASK;
+                        ddsd.ddpfPixelFormat.dwBBitMask=B_MASK;
+                        ddsd.ddpfPixelFormat.dwRGBAlphaBitMask=0;
                         if ((err=dd->lpVtbl->CreateSurface(dd,&ddsd,&ddcs[ddcs_used],NULL))!=DD_OK) continue;
                         if (ddcs_set_info(ddcs_used,DD_LOCMEM,restab[r][0],restab[r][1])==-1) return -1;
                         dd_vidmeminuse+=dd_vidmembytes(ddcs[ddcs_used]);
@@ -574,11 +601,11 @@ int dd_init(int width, int height)
                         ddsd.dwHeight=restab[r][1];
                         ddsd.ddpfPixelFormat.dwSize=sizeof(ddsd.ddpfPixelFormat);
                         ddsd.ddpfPixelFormat.dwFlags=DDPF_RGB;
-                        ddsd.ddpfPixelFormat.u1.dwRGBBitCount=BPP;
-                        ddsd.ddpfPixelFormat.u2.dwRBitMask=R_MASK;
-                        ddsd.ddpfPixelFormat.u3.dwGBitMask=G_MASK;
-                        ddsd.ddpfPixelFormat.u4.dwBBitMask=B_MASK;
-                        ddsd.ddpfPixelFormat.u5.dwRGBAlphaBitMask=0;
+                        ddsd.ddpfPixelFormat.dwRGBBitCount=BPP;
+                        ddsd.ddpfPixelFormat.dwRBitMask=R_MASK;
+                        ddsd.ddpfPixelFormat.dwGBitMask=G_MASK;
+                        ddsd.ddpfPixelFormat.dwBBitMask=B_MASK;
+                        ddsd.ddpfPixelFormat.dwRGBAlphaBitMask=0;
                         if ((err=dd->lpVtbl->CreateSurface(dd,&ddsd,&ddcs[ddcs_used],NULL))!=DD_OK) continue;
                         if (ddcs_set_info(ddcs_used,DD_VIDMEM,restab[r][0],restab[r][1])==-1) return -1;
                         dd_vidmeminuse+=dd_vidmembytes(ddcs[ddcs_used]);
@@ -1773,7 +1800,8 @@ static void sc_make_slow(SYSTEMCACHE *sc, IMAGE *image,signed char sink,unsigned
 				low_x=1-high_x;
 				low_y=1-high_y;
 
-				irgb=image->rgb[floor(ix)+floor(iy)*image->xres];
+                // TODO: proper int array subscript
+				irgb=image->rgb[(int)( floor(ix)+floor(iy) ) * (image->xres)];
 
 				if (irgb==rgbcolorkey) {
 					dbr=0;
@@ -1786,10 +1814,12 @@ static void sc_make_slow(SYSTEMCACHE *sc, IMAGE *image,signed char sink,unsigned
 					dbg=IGET_G(irgb)*low_x*low_y;
 					dbb=IGET_B(irgb)*low_x*low_y;
 					if (!image->a) dba=31*low_x*low_y;
-					else dba=image->a[floor(ix)+floor(iy)*image->xres]*low_x*low_y;
+
+					// TODO: Proper int casting
+					else dba=image->a[(int) (floor(ix)+floor(iy)*image->xres)]*low_x*low_y;
 				}
 
-                                irgb=image->rgb[ceil(ix)+floor(iy)*image->xres];
+                                irgb=image->rgb[(int) (ceil(ix)+floor(iy)*image->xres)];
 
 				if (irgb==rgbcolorkey) {
 					dbr+=0;
@@ -1802,10 +1832,10 @@ static void sc_make_slow(SYSTEMCACHE *sc, IMAGE *image,signed char sink,unsigned
 					dbg+=IGET_G(irgb)*high_x*low_y;
 					dbb+=IGET_B(irgb)*high_x*low_y;
 					if (!image->a) dba+=31*high_x*low_y;
-					else dba+=image->a[ceil(ix)+floor(iy)*image->xres]*high_x*low_y;
+					else dba+=image->a[(int) (ceil(ix)+floor(iy)*image->xres) ]*high_x*low_y;  // TODO int cast
 				}
 
-                                irgb=image->rgb[floor(ix)+ceil(iy)*image->xres];
+                                irgb=image->rgb[(int) (floor(ix)+ceil(iy)*image->xres)];  // TODO int cast
 
 				if (irgb==rgbcolorkey) {
 					dbr+=0;
@@ -1818,10 +1848,10 @@ static void sc_make_slow(SYSTEMCACHE *sc, IMAGE *image,signed char sink,unsigned
 					dbg+=IGET_G(irgb)*low_x*high_y;
 					dbb+=IGET_B(irgb)*low_x*high_y;
 					if (!image->a) dba+=31*low_x*high_y;
-					else dba+=image->a[floor(ix)+ceil(iy)*image->xres]*low_x*high_y;
+					else dba+=image->a[(int) (floor(ix)+ceil(iy)*image->xres) ]*low_x*high_y;  // TODO int cast
 				}
 
-                                irgb=image->rgb[ceil(ix)+ceil(iy)*image->xres];
+                                irgb=image->rgb[(int) (ceil(ix)+ceil(iy)*image->xres)];  // TODO int cast
 
 				if (irgb==rgbcolorkey) {
 					dbr+=0;
@@ -1835,7 +1865,7 @@ static void sc_make_slow(SYSTEMCACHE *sc, IMAGE *image,signed char sink,unsigned
 					dbb+=IGET_B(irgb)*high_x*high_y;
 					
 					if (!image->a) dba+=31*high_x*high_y;
-					else dba+=image->a[ceil(ix)+ceil(iy)*image->xres]*high_x*high_y;
+					else dba+=image->a[(int) (ceil(ix)+ceil(iy)*image->xres)]*high_x*high_y;  // TODO int cast
 				}
 
 
@@ -2360,7 +2390,7 @@ void dd_rect(int sx, int sy, int ex, int ey, unsigned short int color)
 	if ((ex-sx)*(ey-sy)>100) {	// large rect? use hardware then
 		bzero(&bltfx,sizeof(bltfx));
 		bltfx.dwSize=sizeof(bltfx);
-		bltfx.u5.dwFillColor=color;
+		bltfx.dwFillColor=color;
 		
 		rc.left=sx+x_offset;
 		rc.top=sy+y_offset;
@@ -2401,7 +2431,7 @@ void dd_black(void)
 
 	bzero(&bltfx,sizeof(bltfx));
 	bltfx.dwSize=sizeof(bltfx);
-	bltfx.u5.dwFillColor=0;
+	bltfx.dwFillColor=0;
 	
 	rc.left=0;
 	rc.top=0;
@@ -3226,7 +3256,7 @@ void dd_add_text(char *ptr)
 
 		
 		while (*ptr==' ') ptr++;
-		while (*ptr=='°') {
+		while (*ptr=='ï¿½') {
 			ptr++;
 			switch(*ptr) {
 				case 'c':	tmp=atoi(ptr+1);
@@ -3242,7 +3272,7 @@ void dd_add_text(char *ptr)
 		while (*ptr==' ') ptr++;
 		
 		n=0;
-                while (*ptr && *ptr!=' ' && *ptr!='°' && n<49) buf[n++]=*ptr++;
+                while (*ptr && *ptr!=' ' && *ptr!='ï¿½' && n<49) buf[n++]=*ptr++;
 		buf[n]=0;
 		
 		if (x+(tmp=dd_text_len(buf))>=TEXTDISPLAY_SX) {
@@ -3383,32 +3413,7 @@ void vid_mark(struct vid_cache *vc,int type);
 #define VID_MIN_KEEP_DX		10
 #define VID_MIN_KEEP_DY		10
 
-struct vid_cache
-{
-	unsigned char cs;
-	unsigned char dx,dy;
 
-	unsigned short px,py;
-        unsigned short size;
-
-	unsigned short vidx;		// index into vidx array of sprite which is using this entry
-	unsigned int sidx;		// index nr. of sprite which is using this entry
-
-	struct vid_cache *next;         // large cache: next entry in large list
-					// small cache: next entry in free list
-	
-	struct vid_cache *prev;		// large cache: previous entry in large list
-					// small cache: previous entry in free list
-
-	struct vid_cache *child;	// large cache: first child
-					// small cache: next child
-
-	struct vid_cache *parent;	// large cache: unused
-					// small cache: parent
-
-	unsigned int used,tick,junk;
-	unsigned int value;
-};
 
 struct vid_cache *vcs_first=NULL;
 struct vid_cache *vcs_last=NULL;
@@ -3746,9 +3751,9 @@ void vid_mark(struct vid_cache *vc,int type)
 	
 	bzero(&bltfx,sizeof(bltfx));
 	bltfx.dwSize=sizeof(bltfx);
-	if (type==0) bltfx.u5.dwFillColor=rgb2scr[IRGB(0,0,16)];
-	else if (type==1) bltfx.u5.dwFillColor=rgb2scr[IRGB(16,0,0)];
-	else bltfx.u5.dwFillColor=rgb2scr[IRGB(0,16,0)];
+	if (type==0) bltfx.dwFillColor=rgb2scr[IRGB(0,0,16)];
+	else if (type==1) bltfx.dwFillColor=rgb2scr[IRGB(16,0,0)];
+	else bltfx.dwFillColor=rgb2scr[IRGB(0,16,0)];
 
 	rc.left=vc->px;
 	rc.top=vc->py;
@@ -3758,9 +3763,9 @@ void vid_mark(struct vid_cache *vc,int type)
 	if ((err=ddbs->lpVtbl->Blt(ddcs[vc->cs],&rc,NULL,NULL,DDBLT_COLORFILL|DDBLT_WAIT,&bltfx))!=DD_OK) {
                 dd_error("vid erase1",err);
 	}
-	if (type==0) bltfx.u5.dwFillColor=rgb2scr[IRGB(0,0,31)];
-	else if (type==1) bltfx.u5.dwFillColor=rgb2scr[IRGB(31,0,0)];
-	else bltfx.u5.dwFillColor=rgb2scr[IRGB(0,31,0)];
+	if (type==0) bltfx.dwFillColor=rgb2scr[IRGB(0,0,31)];
+	else if (type==1) bltfx.dwFillColor=rgb2scr[IRGB(31,0,0)];
+	else bltfx.dwFillColor=rgb2scr[IRGB(0,31,0)];
 
 	rc.left=vc->px+1;
 	rc.top=vc->py+1;

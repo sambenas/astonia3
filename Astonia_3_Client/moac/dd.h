@@ -1,5 +1,7 @@
 // dd.h
 
+#include "client.h"
+
 #define GFXPATH "../gfx/"
 
 #define MAX_SPRITE      200000  // use this if you need more (up to 1048576=20 bit, but that shure blows everything ;)
@@ -172,7 +174,7 @@ void dd_rect(int sx, int sy, int ex, int ey, unsigned short int color);
 #define DD__SHADEFONT	128
 #define DD__FRAMEFONT	256
 
-#define DDT             '°' // draw text terminator - (zero stays one, too)
+#define DDT             'ï¿½' // draw text terminator - (zero stays one, too)
 int dd_textlength(int flags, const char *text);
 int dd_textlen(int flags, const char *text, int n);
 int dd_drawtext(int sx, int sy, unsigned short int color, int flags, const char *text);

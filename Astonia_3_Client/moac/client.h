@@ -1,3 +1,6 @@
+#ifndef _ASTONIA_CLIENT_H_
+#define _ASTONIA_CLIENT_H_
+
 #define TPS             24              // ticks per second
 #define TICKS           TPS             // needed in spell.h
 #define MPT             (1000/TPS)      // milliseconds per tick
@@ -735,3 +738,5 @@ void cl_client_info(struct client_info *ci);
 void cl_ticker(void);
 int level2exp(int level);
 int is_char_ceffect(int type);
+
+#endif /* _ASTONIA_CLIENT_H_ */

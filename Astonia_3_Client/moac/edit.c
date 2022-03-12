@@ -4,10 +4,10 @@
 #include <math.h>
 #pragma hdrstop
 
+#include "client.h"
 #include "main.h"
 #include "dd.h"
 #define ISCLIENT
-#include "client.h"
 #include "gui.h"
 #include "edit.h"
 #include "sprite.h"
