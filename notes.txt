@@ -1,0 +1,4 @@
+Various things discovered during testing:
+
+Header files don't have header guards
+Some game files are dynamically loaded at runtime, probably can just be static?  Not sure really.

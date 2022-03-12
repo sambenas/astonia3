@@ -1,3 +1,0 @@
-int VERSION=50660408;
-char *VER_DATE=__DATE__;
-char *VER_TIME=__TIME__;

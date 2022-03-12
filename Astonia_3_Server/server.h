@@ -16,6 +16,9 @@
  * Initial revision
  */
 
+#ifndef __ASTONIA_SERVER_HDR__
+#define __ASTONIA_SERVER_HDR__
+
 #define VERSION	 0x030100
 
 #define TICKS		24
@@ -536,7 +539,10 @@ struct effect
 	int number_of_enemies;		// number of enemies hit by effect last tick
 
 	int base_sprite;		// for explosion: sprite number
-} *ef;
+};
+
+extern struct effect *ef;
+// ^^ TODO:  Fix this extern thing
 
 // *********** BASIC LIBRARY ******************
 unsigned long long prof_start(int task);
@@ -555,3 +561,5 @@ void cmd_show_prof(int cn);
 #undef strdup
 #define strdup	error error error
 #endif
+
+#endif /* ! __ASTONIA_SERVER_HDR__ */

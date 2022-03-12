@@ -37,9 +37,10 @@ Added RCS tags
 
 // ********** effect allocation and freeing *************
 
-static struct effect *ueffect,*feffect;
+static struct effect *ueffect, *feffect;
+struct effect *ef;
 
-int used_effects,efserial=1;
+int used_effects, efserial = 1;
 
 // get new effect from free list
 // and add it to used list

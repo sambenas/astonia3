@@ -28,11 +28,11 @@ runtime/37/arkhata.dll create_account create_character
 
 CC=gcc
 DEBUG=-g
-CFLAGS=-Wall -Wshadow -Wno-pointer-sign -O3 $(DEBUG) -fno-strict-aliasing -m32 -DSTAFF
-LDFLAGS=-O $(DEBUG) -m32 -L/usr/lib/mysql
-LDRFLAGS=-O $(DEBUG) -m32 -rdynamic -L/usr/lib/mysql
-DDFLAGS=-O $(DEBUG) -m32 -fPIC -shared
-DFLAGS=$(CFLAGS) -m32 -fPIC
+CFLAGS=-Wall -Wshadow -Wno-pointer-sign $(DEBUG) -fno-strict-aliasing -DSTAFF -static-libgcc -lgcc -static -fPIC
+LDFLAGS=-O $(DEBUG) -fPIC -L/usr/lib/mysql
+LDRFLAGS=-O $(DEBUG) -fPIC -rdynamic -L/usr/lib/mysql
+DDFLAGS=-O $(DEBUG) -fPIC -shared
+DFLAGS=$(CFLAGS) -fPIC
 DATE=`date +%y%m%d%H`
 
 OBJS=.obj/server.o .obj/io.o .obj/libload.o .obj/tool.o .obj/sleep.o \
