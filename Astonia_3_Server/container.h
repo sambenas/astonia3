@@ -12,6 +12,10 @@ Added RCS tags
 
 */
 
+
+#ifndef _ASTONIA_CONTAINER_H_
+#define _ASTONIA_CONTAINER_H_
+
 #define MAXCONTAINER	1024
 #define CONTAINERSIZE	(INVENTORYSIZE)
 
@@ -41,3 +45,5 @@ int destroy_item_container(int in);
 int add_item_container(int ct,int in,int pos);
 int remove_item_container(int in);
 int container_itemcnt(int in);
+
+#endif

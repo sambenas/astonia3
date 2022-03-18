@@ -12,6 +12,11 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_COMMAND_H_
+#define _ASTONIA_COMMAND_H_
+
 int command(int cn,char *ptr);
 void demonspeak(int cn,int nr,char *buf);
 int cmdcmp(char *ptr,char *cmd,int minlen);
+
+#endif

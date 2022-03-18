@@ -12,5 +12,10 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_SEE_H_
+#define _ASTONIA_SEE_H_
+
 int char_see_char(int cn,int co);
 int char_see_item(int cn,int in);
+
+#endif

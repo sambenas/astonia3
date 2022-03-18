@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_EFFECT_H_
+#define _ASTONIA_EFFECT_H_
+
 #define EF_NONE		0
 #define EF_FIREBALL	1
 #define EF_MAGICSHIELD	2
@@ -64,3 +67,5 @@ int remove_effect_char(int fn);
 void create_pulse(int x,int y,int str);
 int destroy_effect_type(int cn,int type);
 int create_map_effect(int type,int x,int y,int start,int stop,int light,int strength);
+
+#endif

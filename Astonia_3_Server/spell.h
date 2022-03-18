@@ -11,6 +11,10 @@ Added RCS tags
 
 
 */
+
+#ifndef _ASTONIA_SPELL_H_
+#define _ASTONIA_SPELL_H_
+
 // spell costs moved here so that NPC drivers can use them
 
 #define BLESSCOST	(2*POWERSCALE)
@@ -26,3 +30,5 @@ Added RCS tags
 #define	BLESSDURATION	(TICKS*60*2)
 #define FLASHDURATION	(TICKS*2)
 #define FREEZEDURATION	(TICKS*4)
+
+#endif

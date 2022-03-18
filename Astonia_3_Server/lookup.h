@@ -12,7 +12,12 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_LOOKUP_H_
+#define _ASTONIA_LOOKUP_H_
+
 int lookup_name(char *name,char *realname);
 int lookup_ID(char *name,int ID);
 void lookup_add_cache(unsigned int ID,char *name);
 int init_lookup(void);
+
+#endif

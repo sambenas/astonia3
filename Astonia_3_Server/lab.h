@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_LAB_H_
+#define _ASTONIA_LAB_H_
+
 struct lab_ppd
 {
 	unsigned long long solved_bits;		// max 64 labs
@@ -50,3 +53,4 @@ int teleport_next_lab(int cn,int do_teleport);
 int set_solved_lab(int cn,int lab_level);
 int create_lab_exit(int cn,int level);
 
+#endif

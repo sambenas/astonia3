@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_LOS_H_
+#define _ASTONIA_LOS_H_
+
 #define MAXDIST		25
 #define SIZE		(MAXDIST*2+1)
 
@@ -51,3 +54,5 @@ int init_los(void);
 void reset_los(int xc,int yc);
 int los_can_see(int cn,int xc,int yc,int tx,int ty,int maxdist);
 int update_los(int cn,int xc,int yc,int maxdist);
+
+#endif

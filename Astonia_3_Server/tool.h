@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef _ASTONIA_TOOL_H_
+#define _ASTONIA_TOOL_H_
+
 // defining NULL ourselves saves including stdio
 #ifndef NULL
 #define NULL (void*)0
@@ -146,6 +149,4 @@ void give_money(int cn,int val,char *reason);
 void sanitize_item(struct item *in,int cn);
 int count_enhancements(int in);
 
-
-
-
+#endif

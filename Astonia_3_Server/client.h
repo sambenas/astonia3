@@ -9,6 +9,9 @@
  * added transmission of military exp
  */
 
+#ifndef _ASTONIA_CLIENT_H_
+#define _ASTONIA_CLIENT_H_
+
 #ifndef DIST
 #define DIST		25
 #endif
@@ -388,9 +391,4 @@ struct client_info
 	struct client_surface surface[CL_MAX_SURFACE];
 };
 
-
-
-
-
-
-
+#endif

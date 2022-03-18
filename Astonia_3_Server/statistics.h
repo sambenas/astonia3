@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_STATISTICS_H_
+#define _ASTONIA_STATISTICS_H_
+
 #define MAXSTAT	365
 #define RESOLUTION (60*60*24)
 
@@ -30,3 +33,5 @@ struct stats_ppd
 
 void stats_update(int cn,int onl,int gold);
 int stats_online_time(int cn);
+
+#endif

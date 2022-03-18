@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_DEPOT_H_
+#define _ASTONIA_DEPOT_H_
+
 #define MAXDEPOT	80
 
 struct depot_ppd
@@ -21,3 +24,5 @@ struct depot_ppd
 int swap_depot(int cn,int nr);
 void player_depot(int cn,int nr,int flag,int fast);
 void depot_sort(int cn);
+
+#endif

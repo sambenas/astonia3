@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_DO_H_
+#define _ASTONIA_DO_H_
+
 int do_idle(int cn,int dur);
 int do_walk(int cn,int dir);
 int do_take(int cn,int dir);
@@ -42,3 +45,5 @@ int equip_item(int cn,int in,int pos);
 int do_earthmud(int cn,int x,int y,int strength);
 int do_earthrain(int cn,int x,int y,int strength);
 int do_pulse(int cn);
+
+#endif

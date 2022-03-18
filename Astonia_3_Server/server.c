@@ -82,6 +82,8 @@
 
 unsigned long long rdtsc(void);
 
+// Some of these, like 'online' and 'server_net' are better handled by individual services, not as globals
+// Other things like mem_usage should maybe even be removed and other sysadmin/profilg tools can handle that
 int
 	quit=0,		// SIGINT: leave program
 	demon=0,	// daemonize server?
@@ -106,6 +108,7 @@ int
 	serverID=0,
 	isxmas=0;
 
+// Again these probably don't need to be tracked here
 volatile long long
 	sent_bytes_raw=0,	// bytes sent including approximation of tcp/ip overhead
 	sent_bytes=0;		// bytes sent
@@ -144,10 +147,13 @@ void sig_showprof(int dummy)
         if (cnt++>5) abort();
 }*/
 
+// Not sure why these are being declared here, maybe the header guard issue?  Defined in other files
 void tick_char(void);
 
 void *end_of_data_ptr;
 
+// Some performance statistics might be necessary, e,g,
+// num actions resolved per tick, but probably not memory
 void showmem(void)
 {
 	struct mallinfo mi;
@@ -178,6 +184,7 @@ void prof_reset(void);
 
 int maxchars=0,maxitem=0,maxeffect=0;
 
+// Is this just printing an ascii string in a for loop?
 void show(char *ptr,int size)
 {
 	int n;
@@ -194,10 +201,12 @@ int main(int argc,char *args[])
 	int n,c;
 	unsigned long long prof,start,end;
 
+	// unistd.h, not sure what it does
 	end_of_data_ptr=sbrk(0);
 
 	time_now=time(NULL);
 
+	// We can get rid of this
 	printf("\n");
 	printf("   ********************************************\n");
         printf("   *     Astonia 3 - The Conflict Server      *\n");
@@ -207,6 +216,7 @@ int main(int argc,char *args[])
 	printf("   * Copyright (C) 1997-2001 Daniel Brockhaus *\n");
 	printf("   ********************************************\n");
 	printf("\n");
+
 
         if (argc>1) {
 		while (1) {
@@ -229,6 +239,10 @@ int main(int argc,char *args[])
 		printf("No areaID given, assuming areaID=1\n");
 		areaID=1;
 	}
+
+	// Do we want to get rid of mirrors?  Areas could get crowded, maybe we keep them?
+	// Or do we go full runescape and have entirely different servers?  tele mirror
+	// menu could just do a client disconnect/reconnect
 	if (!areaM) {
 		printf("No mirror given, assuming areaM=1\n");
 		areaM=1;
@@ -238,12 +252,17 @@ int main(int argc,char *args[])
 		serverID=1;
 	}
 
+// Deletes a file in zones/27/ not sure why
 #ifdef STAFF
 	while (!check_staff_start()) sleep(1);
 #endif
 
 
-        // set character number limit depending on area
+	// set character number limit depending on area
+	// We can probably get rid of these and just use
+	// a #define MAXCHARS, side note we should chose
+	// a better name than CHAR so it doesn't get
+	// confused with primite type, e.g. PLAYERS
 	switch(areaID) {
 		case 1:		maxchars=512; break;
 		case 2:		maxchars=896; break;
@@ -287,12 +306,14 @@ int main(int argc,char *args[])
 	}
 	
 	// set item and effect limit
+	// again, #define's 
 	if (!maxitem) maxitem=max(maxchars*12+10240,20480);
 	if (!maxeffect) maxeffect=max(maxchars*2,1024);
 
 	printf("serverID=%d, areaID=%d, areaM=%d, maxchars=%d, maxitem=%d, maxeffect=%d\n\n",
 	       serverID,areaID,areaM,maxchars,maxitem,maxeffect);
 
+	// Do we want to support deamonization in the server or just use tools like supervisor/systemd?
 	if (demon) {
 		printf("Demonizing...\n\n");
 		
@@ -304,6 +325,7 @@ int main(int argc,char *args[])
 #endif
 	}
 
+	// Move signal handling to different function
         // ignore the silly pipe errors:
         signal(SIGPIPE,SIG_IGN);
 
@@ -326,20 +348,21 @@ int main(int argc,char *args[])
 	// init random number generator
         srand(time_now);
 
+	// Wrapp all of these with game_init() or something
 	if (!init_smalloc()) exit(1);
 	if (!init_mem()) exit(1);
-        if (!init_prof()) exit(1);
+	if (!init_prof()) exit(1);
 	if (!init_log()) exit(1);	
-        if (!init_database()) exit(1);
+	if (!init_database()) exit(1);
 	if (!init_lookup())  exit(1);
-        if (!init_sector())  exit(1);
-        if (!init_los()) exit(1);
+	if (!init_sector())  exit(1);
+	if (!init_los()) exit(1);
 	if (!init_timer()) exit(1);
-        if (!init_notify()) exit(1);
+	if (!init_notify()) exit(1);
 	if (!init_create()) exit(1);
-        if (!init_lib()) exit(1);
+	if (!init_lib()) exit(1);
 	if (!init_io()) exit(1);
-        if (!init_path()) exit(1);	
+	if (!init_path()) exit(1);	
 	if (!init_effect()) exit(1);
 	if (!init_container()) exit(1);
 	if (!init_store()) exit(1);
@@ -354,9 +377,11 @@ int main(int argc,char *args[])
 
         while (!quit) {
 		sprintf(args[0],"./server -a %d -m %d -i %d # %d on %d%% load (busy)",areaID,areaM,serverID,online,(10000-server_idle)/100);
-		start=rdtsc();
-		lock_server();
+		start=rdtsc(); // timestamp counter
+		lock_server();  // Do we need a global server lock?
 
+		// Game state update handling with task stacks
+		// wrap with utility
 		time_now=time(NULL);
 		prof=prof_start(26); tick_date(); prof_stop(26,prof);
 		prof=prof_start(22); tick_timer(); prof_stop(22,prof);
@@ -380,6 +405,7 @@ int main(int argc,char *args[])
 		end=rdtsc();
 		cycles=end-start;
 
+		// Periodic saves
 		if ((ticker&2047)==0) {
 			prof=prof_start(27); area_alive(0); prof_stop(27,prof);
 			prof=prof_start(28); backup_players(); prof_stop(28,prof);
@@ -410,6 +436,7 @@ int main(int argc,char *args[])
 
 		sprintf(args[0],"./server -a %d -m %d -i %d # %d on %d%% load (idle)",areaID,areaM,serverID,online,(10000-server_idle)/100);
 
+		// Always sleep tick duration regardless of processing time?
 		prof=prof_start(1); tick_sleep(0); prof_stop(1,prof);
 		
 		ticker++;

@@ -12,5 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_BTRACE_H_
+#define _ASTONIA_BTRACE_H_
+
 void btrace(char *msg);
 
+#endif

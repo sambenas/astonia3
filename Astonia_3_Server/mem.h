@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_MEM_H_
+#define _ASTONIA_MEM_H_
+
 #define IM_BASE		1
 #define IM_TEMP		2
 #define IM_CHARARGS	3
@@ -35,3 +38,5 @@ void *xstrdup(char *ptr,int ID);
 void list_mem(void);
 int init_mem(void);
 int init_smalloc(void);
+
+#endif

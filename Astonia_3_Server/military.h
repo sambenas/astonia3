@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_MILITARY_H_
+#define _ASTONIA_MILITARY_H_
+
 #define MAXADVISOR	20
 
 struct mission
@@ -48,3 +51,4 @@ struct military_ppd
 	int recommend;		// to remember if we mentioned a recommendation already
 };
 
+#endif

@@ -15,6 +15,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_AREA1_H_
+#define _ASTONIA_AREA1_H_
+
 #define AF1_STORAGE_HINT	(1u<<1)
 #define AF1_BUY_HINT		(1u<<2)
 
@@ -58,3 +61,4 @@ struct area1_ppd
 	int shrike_fails;
 };
 
+#endif

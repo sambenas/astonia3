@@ -10,6 +10,9 @@
  *
  */
 
+#ifndef _ASTONIA_DATABASE_H_
+#define _ASTONIA_DATABASE_H_
+
 int init_database(void);
 int save_char(int cn,int area);
 int release_char(int cn);
@@ -58,10 +61,4 @@ void db_new_pvp(void);
 void db_add_pvp(char *killer,char *victim,char *what,int damage);
 int karmalog(int rID);
 
-
-
-
-
-
-
-
+#endif

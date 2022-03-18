@@ -12,6 +12,11 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_TELL_H_
+#define _ASTONIA_TELL_H_
+
 void register_sent_tell(int cn,int coID);
 void register_rec_tell(int cn,int coID);
 void check_tells(int cn);
+
+#endif

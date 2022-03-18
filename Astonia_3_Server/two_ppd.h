@@ -1,3 +1,5 @@
+#ifndef _ASTONIA_TWO_PPD_H_
+#define _ASTONIA_TWO_PPD_H_
 
 struct twocity_ppd
 {
@@ -34,3 +36,4 @@ struct twocity_ppd
 	int alchemist_state;
 };
 
+#endif

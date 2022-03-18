@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef _ASTONIA_STAFFER_PPD_H_
+#define _ASTONIA_STAFFER_PPD_H_
+
 struct staffer_ppd
 {
 	int smugglecom_state;		// WARR
@@ -42,3 +45,4 @@ struct staffer_ppd
 	int rouven_state;		// MAX/DB
 };
 
+#endif

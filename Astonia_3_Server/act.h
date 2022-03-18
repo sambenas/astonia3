@@ -15,6 +15,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_ACT_H_
+#define _ASTONIA_ACT_H_
+
 #define AC_IDLE		0
 #define AC_WALK		1
 #define AC_TAKE		2
@@ -60,3 +63,5 @@ void tick_char(void);
 int bless_someone(int co,int strength,int duration);
 void check_container_item(int cn);
 void check_merchant(int cn);
+
+#endif

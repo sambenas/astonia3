@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_ERROR_H_
+#define _ASTONIA_ERROR_H_
+
 extern int error;
 
 char *get_error_string(int err);
@@ -55,3 +58,5 @@ char *get_error_string(int err);
 #define ERR_NOT_PLAYER			36
 #define ERR_NO_EFFECT			37
 #define ERR_ALREADY_THERE		38
+
+#endif

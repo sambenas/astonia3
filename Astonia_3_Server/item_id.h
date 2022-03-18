@@ -16,6 +16,9 @@
  *
  */
 
+#ifndef _ASTONIA_ITEM_ID_H_
+#define _ASTONIA_ITEM_ID_H_
+
 #ifndef DEV_ID_DB
 #define DEV_ID_DB		0x01		// ID of Daniel Brockhaus
 #endif
@@ -377,6 +380,7 @@
 
 */
 
+#endif
 
 
 

@@ -15,6 +15,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_MISC_PPD_H_
+#define _ASTONIA_MISC_PPD_H_
+
 struct misc_ppd
 {
 	int lfreduct_usage_count;
@@ -31,3 +34,4 @@ struct misc_ppd
 	unsigned char treedone[8];
 };
 
+#endif

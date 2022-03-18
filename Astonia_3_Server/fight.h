@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_FIGHT_H_
+#define _ASTONIA_FIGHT_H_
+
 struct person
 {
 	unsigned int cn;
@@ -34,3 +37,5 @@ struct fight_driver_data
 
 	int lasthit;
 };
+
+#endif

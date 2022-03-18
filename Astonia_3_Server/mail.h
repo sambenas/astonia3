@@ -12,5 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_MAIL_H_
+#define _ASTONIA_MAIL_H_
+
 int sendmail(char *to,char *subject,char *body,char *from,int do_copy);
 
+#endif

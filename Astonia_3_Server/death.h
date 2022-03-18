@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_DEATH_H_
+#define _ASTONIA_DEATH_H_
+
 int kill_char(int cn,int co);
 int hurt(int cn,int dam,int cc,int armordiv,int armorper,int shieldper);
 int die_char(int cn,int co,int ispk);
@@ -22,3 +25,5 @@ int delayed_hurt(int delay,int cn,int dam,int armorper,int shieldper);
 int kill_score_level(int cnlev,int cclev);
 int allow_body_db(int cnID,int coID);
 int check_first_kill(int cn,int nr);
+
+#endif

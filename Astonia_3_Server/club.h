@@ -1,3 +1,6 @@
+#ifndef _ASTONIA_CLUB_H_
+#define _ASTONIA_CLUB_H_
+
 #define MAXCLUB		16384
 #define CLUBOFFSET	1024
 
@@ -18,3 +21,5 @@ int rename_club(int nr,char *name);
 void kill_club(int cnr);
 void showclub(int cn);
 int create_club(char *name);
+
+#endif

@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef _ASTONIA_NOTIFY_H_
+#define _ASTONIA_NOTIFY_H_
+
 #define NT_CHAR		1		// there is a character
 #define NT_ITEM		2               // there is an item
 #define NT_GOTHIT	3		// we got hit!!
@@ -56,12 +59,4 @@ void remove_message(int cn,struct msg *msg);
 void notify_all(int type,int dat1,int dat2,int dat3);
 void notify_area_shout(int xc,int yc,int type,int dat1,int dat2,int dat3);
 
-
-
-
-
-
-
-
-
-
+#endif

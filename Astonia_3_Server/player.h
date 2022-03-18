@@ -11,6 +11,9 @@
  *
  */
 
+#ifndef _ASTONIA_PLAYER_H_
+#define _ASTONIA_PLAYER_H_
+
 #define MAXPLAYER	256
 
 #define ST_CONNECT	1
@@ -165,6 +168,4 @@ void exit_char_player(int cn);
 unsigned int get_player_addr(int nr);
 void sendquestlog(int cn,int nr);
 
-
-
-
+#endif

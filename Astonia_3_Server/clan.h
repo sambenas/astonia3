@@ -11,6 +11,9 @@
  *
  */
 
+#ifndef _ASTONIA_CLAN_H_
+#define _ASTONIA_CLAN_H_
+
 #define MAXCLAN		32
 #define MAXBONUS	14
 
@@ -141,3 +144,4 @@ int score_to_level(int score);
 int clan_get_training_score(int cnr);
 void show_clan_message(int cn);
 
+#endif

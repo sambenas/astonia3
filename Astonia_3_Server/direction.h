@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_DIRECTION_H_
+#define _ASTONIA_DIRECTION_H_
+
 #define DX_RIGHT	1
 #define DX_RIGHTDOWN	2
 #define DX_DOWN		3
@@ -20,3 +23,5 @@ Added RCS tags
 #define DX_LEFTUP	6
 #define DX_UP		7
 #define DX_RIGHTUP	8
+
+#endif

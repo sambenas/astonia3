@@ -16,8 +16,8 @@
  * Initial revision
  */
 
-#ifndef __ASTONIA_SERVER_HDR__
-#define __ASTONIA_SERVER_HDR__
+#ifndef _ASTONIA_SERVER_H_
+#define _ASTONIA_SERVER_H_
 
 #define VERSION	 0x030100
 

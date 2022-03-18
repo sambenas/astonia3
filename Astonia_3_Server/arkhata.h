@@ -1,3 +1,6 @@
+#ifndef _ASTONIA_ARKHATA_H_
+#define _ASTONIA_ARKHATA_H_
+
 struct arkhata_ppd
 {
 	int rammy_state;
@@ -23,3 +26,4 @@ struct arkhata_ppd
 	int krenach_time;
 };
 
+#endif

@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_MAP_H_
+#define _ASTONIA_MAP_H_
+
 int set_item_map(int in,int x,int y);
 int remove_item_map(int in);
 int remove_item_char(int in);
@@ -24,3 +27,5 @@ void check_map(void);
 int item_drop_char(int in,int cn);
 int drop_item_extended(int in,int x,int y,int maxdist);
 int drop_char_extended(int cn,int x,int y,int maxdist);
+
+#endif

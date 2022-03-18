@@ -12,8 +12,13 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_BANK_H_
+#define _ASTONIA_BANK_H_
+
 struct bank_ppd
 {
 	int imperial_gold;
 };
+
+#endif
 

@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_SECTOR_H_
+#define _ASTONIA_SECTOR_H_
+
 int init_sector(void);
 void set_sector(int x,int y);
 int skipx_sector(int x,int y);
@@ -21,3 +24,5 @@ int getfirst_char_sector(int x,int y);
 void init_sound_sector(void);
 int sector_hear(int xf,int yf,int xt,int yt);
 int sector_hear_shout(int xf,int yf,int xt,int yt);
+
+#endif

@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_LIBLOAD_H_
+#define _ASTONIA_LIBLOAD_H_
+
 int init_lib(void);
 void exit_lib(void);
 
@@ -23,3 +26,5 @@ void exit_lib(void);
 
 int char_driver(int nr,int type,int cn,int ret,int last_action);
 int item_driver(int nr,int in,int cn);
+
+#endif

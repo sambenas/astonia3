@@ -12,8 +12,12 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_POISON_H_
+#define _ASTONIA_POISON_H_
+
 void poison_someone(int cn,int pwr,int type);
 void poison_callback(int cn,int in,int pos,int cserial,int iserial);
 int remove_all_poison(int cn);
 int remove_poison(int cn,int type);
 
+#endif

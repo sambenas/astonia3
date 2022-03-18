@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_LOSTCON_H_
+#define _ASTONIA_LOSTCON_H_
+
 struct lostcon_ppd
 {
 	int autobless;
@@ -37,3 +40,4 @@ struct lostcon_ppd
 	int maxlag;
 };
 
+#endif

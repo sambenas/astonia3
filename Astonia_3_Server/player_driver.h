@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_PLAYER_DRIVER_H_
+#define _ASTONIA_PLAYER_DRIVER_H_
+
 void player_driver_stop(int nr,int nofight);
 void player_driver_move(int nr,int x,int y);
 void player_driver_take(int nr,int in);
@@ -28,3 +31,5 @@ int player_driver_get_move(int cn,int *px,int *py);
 int player_driver_fake_move(int cn,int x,int y);
 void player_driver_dig_off(int cn);
 void player_driver_dig_on(int cn);
+
+#endif

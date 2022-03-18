@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_LIGHT_H_
+#define _ASTONIA_LIGHT_H_
+
 #define LIGHTDIST	10
 
 void add_effect_light(int x,int y,int light);
@@ -26,3 +29,5 @@ int reset_dlight(int xc,int yc);
 int remove_lights(int xc,int yc);
 int add_lights(int xc,int yc);
 void compute_groundlight(int x,int y);
+
+#endif

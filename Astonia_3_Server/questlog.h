@@ -13,6 +13,9 @@
  *
  */
 
+#ifndef _ASTONIA_QUESTLOG_H_
+#define _ASTONIA_QUESTLOG_H_
+
 #define MAXQUEST	100
 #define QF_OPEN		1
 #define QF_DONE		2
@@ -32,5 +35,4 @@ int questlog_count(int cn,int qnr);
 int questlog_scale(int cnt,int ex);
 void questlog_close(int cn,int qnr);
 
-
-
+#endif

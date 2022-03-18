@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_MOTD_H_
+#define _ASTONIA_MOTD_H_
+
 int read_motd(void);
 void show_motd(int nr);
 #ifdef STAFF
@@ -19,3 +22,4 @@ int check_staff_start(void);
 void check_staff_stop(void);
 #endif
 
+#endif

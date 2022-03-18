@@ -27,6 +27,9 @@
 
 // ID's of data blocks.
 
+#ifndef _ASTONIA_DRDATA_H_
+#define _ASTONIA_DRDATA_H_
+
 #define PERSISTENT_PLAYER_DATA	(1<<31)
 
 // 1 ... 127	
@@ -224,11 +227,4 @@ int del_data(int cn,int ID); 				// remove data block ID from cn
 void *get_data(int cn,int ID,int size);			// get the block ID from cn, return NULL on error
 void del_all_data(int cn);				// delete ALL datablocks attached to cn
 
-
-
-
-
-
-
-
-
+#endif

@@ -145,7 +145,7 @@ int init_lib(void)
 	dir=opendir("runtime/generic");
 	if (dir) {
 		while ((de=readdir(dir))) {
-			if (!endcmp(de->d_name,".dll")) continue;
+			if (!endcmp(de->d_name,".so")) continue;
 	
 			sprintf(name,"./runtime/generic/%s",de->d_name);
 			
@@ -158,7 +158,7 @@ int init_lib(void)
 	dir=opendir(dirname);
 	if (dir) {
 		while ((de=readdir(dir))) {
-			if (!endcmp(de->d_name,".dll")) continue;
+			if (!endcmp(de->d_name,".so")) continue;
 	
 			sprintf(name,"./%s/%s",dirname,de->d_name);
 			

@@ -12,8 +12,12 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_BALANCE_H_
+#define _ASTONIA_BALANCE_H_
+
 #define ATTACK_DIV		5	// orig 5
 
 #define FIREBALL_DAMAGE		5	// orig 5
 #define STRIKE_DAMAGE		5	// orig 5
 
+#endif

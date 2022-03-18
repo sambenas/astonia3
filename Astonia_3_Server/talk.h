@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_TALK_H_
+#define _ASTONIA_TALK_H_
+
 #define LOG_SYSTEM	0
 #define LOG_TALK	1	// dat1=co, everyone in area gets it, blocked by MF_SOUNDBLOCK|MF_SHOUTBLOCK
 #define LOG_SHOUT	2	// dat1=co, everyone in area gets it, blocked by MF_SHOUTBLOCK
@@ -27,3 +30,5 @@ int quiet_say(int cn,char *format,...) __attribute__ ((format(printf,2,3)));
 int whisper(int cn,char *format,...) __attribute__ ((format(printf,2,3)));
 int murmur(int cn,char *format,...) __attribute__ ((format(printf,2,3)));
 int sound_area(int xc,int yc,int type);
+
+#endif

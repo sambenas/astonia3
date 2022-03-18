@@ -40,6 +40,9 @@
  *
  */
 
+#ifndef _ASTONIA_DRVLIB_H_
+#define _ASTONIA_DRVLIB_H_
+
 // driver numbers get defined here
 
 // character drivers
@@ -451,3 +454,5 @@ int fight_driver_pulse_value(int cn);
 void fight_driver_note_hit(int cn);
 void mem_erase_driver(int cn,int nr);
 int attack_driver_direct(int cn,int co);
+
+#endif

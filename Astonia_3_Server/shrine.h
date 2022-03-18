@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_SHRINE_H_
+#define _ASTONIA_SHRINE_H_
+
 #define MAXSHRINE	256
 
 #define DEATH_SHRINE		(51)
@@ -24,3 +27,4 @@ struct shrine_ppd
 	unsigned char continuity;
 };
 
+#endif

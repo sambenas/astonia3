@@ -12,6 +12,11 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_SLEEP_H_
+#define _ASTONIA_SLEEP_H_
+
 extern int cidle_avg;
 void tick_sleep(int show_idle);
 long long timel(void);
+
+#endif

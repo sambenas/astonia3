@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_SKILL_H_
+#define _ASTONIA_SKILL_H_
+
 struct skill
 {
 	char name[80];
@@ -30,3 +33,5 @@ int supermax_cost(int cn,int skl,int val);
 int calc_exp(int cn);
 int lower_value(int cn,int v);
 int raise_value_exp(int cn,int v);
+
+#endif

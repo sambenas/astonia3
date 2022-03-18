@@ -1,3 +1,6 @@
+#ifndef _ASTONIA_NOMAD_PPD_H_
+#define _ASTONIA_NOMAD_PPD_H_
+
 #define MAXNOMAD	10
 
 #define TM_TRIBE1	1
@@ -13,3 +16,4 @@ struct nomad_ppd
 	int tribe_member;
 };
 
+#endif

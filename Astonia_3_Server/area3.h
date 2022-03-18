@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_AREA3_H_
+#define _ASTONIA_AREA3_H_
+
 struct area3_ppd
 {
 	int seymour_state;
@@ -30,3 +33,4 @@ struct area3_ppd
 	int hermit_state;
 };
 
+#endif

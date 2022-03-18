@@ -1,3 +1,6 @@
+#ifndef _ASTONIA_MISSION_PPD_H_
+#define _ASTONIA_MISSION_PPD_H_
+
 struct single_mission
 {
 	int type;
@@ -31,3 +34,4 @@ struct mission_ppd
 	int statowed,statcnt,stat[3];
 };
 
+#endif

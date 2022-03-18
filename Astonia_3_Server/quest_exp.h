@@ -15,6 +15,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_QUEST_EXP_H_
+#define _ASTONIA_QUEST_EXO_H_
+
 #define	EXP_AREA1_SKULL1	75
 #define EXP_AREA1_SKULL2	150	
 #define EXP_AREA1_SKULL3	300
@@ -54,6 +57,4 @@ Added RCS tags
 #define MONEY_AREA3_MOONIES	2500
 #define MONEY_AREA3_VAMPIRE1	2500
 
-
-
-
+#endif

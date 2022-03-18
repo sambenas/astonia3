@@ -7,8 +7,11 @@
  *
  */
 
+#ifndef _ASTONIA_TEUFEL_PK_H_
+#define _ASTONIA_TEUFUL_PK_H_
+
 int teufel_pk(int cn,int co);
 void teufel_damage(int cn,int cc,int dam);
 void teufel_death(int cn,int cc);
 
-
+#endif

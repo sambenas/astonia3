@@ -15,6 +15,10 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_SWEAR_H_
+#define _ASTONIA_SWEAR_H_
+
 int swearing(int cn,char *ptr);
 void swear_ban(int cn,int minutes);
 
+#endif

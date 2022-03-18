@@ -15,6 +15,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_LOG_H_
+#define _ASTONIA_LOG_H_
+
 void ilog(char *format,...) __attribute__ ((format(printf,1,2)));
 void elog(char *format,...) __attribute__ ((format(printf,1,2)));
 void xlog(char *format,...) __attribute__ ((format(printf,1,2)));
@@ -24,3 +27,5 @@ void exit_log(void);
 void elog_item(int in);
 void reinit_log(void);
 void log_items(int cn);
+
+#endif

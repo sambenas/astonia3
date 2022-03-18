@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_CREATE_H_
+#define _ASTONIA_CREATE_H_
+
 extern int used_chars;
 extern int used_items;
 
@@ -32,3 +35,5 @@ int destroy_items(int cn);
 int lookup_char(char *name);
 int lookup_item(char *name);
 int create_item_nr(int tmp);
+
+#endif

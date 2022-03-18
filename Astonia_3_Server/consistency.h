@@ -12,7 +12,12 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_CONSISTENCY_H_
+#define _ASTONIA_CONSISTENCY_H_
+
 int consistency_check_items(void);
 int consistency_check_map(void);
 int consistency_check_chars(void);
 int consistency_check_containers(void);
+
+#endif

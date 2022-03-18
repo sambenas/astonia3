@@ -12,5 +12,10 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_CLANLOG_H_
+#define _ASTONIA_CLANLOG_H_
+
 int cmd_clanlog(int cn,char *ptr);
+
+#endif
 

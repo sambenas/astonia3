@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_PUNISH_H_
+#define _ASTONIA_PUNISH_H_
+
 struct punishment
 {
 	int level;
@@ -23,3 +26,5 @@ struct punishment
 int punish(int pID,struct character *co,int level,char *reason,int *plock,int *pkick);
 int unpunish(int pID,struct character *co,int ID,int *plock,int *pkick);
 void list_punishment(int rID,struct punishment *pun,int cID,int date,int ID);
+
+#endif

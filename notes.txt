@@ -1,17 +1,23 @@
-Various things discovered during testing:
+Various things discovered:
 
-- Header files don't have header guards
+- Header files don't have header guards (FIXED)
 
 - Some game files are dynamically loaded at runtime, probably can just be static?  Not sure really.
-  At least for now -static seems to potentially break some things
-
-- Might not be compatible with glibc 2.32+ due to pthread_sigmask issue.  Dynamic/Static linking issue?
-  Nah, need -pthread CFLAG and -lpthread LDFLAG
+  At least for now -static seems to potentially break some things in the mysql client
 
 - Client is not cross-compiled, it is compiled on a windows machine with
-  borland by default.  Might require significant work.
-  e.g. windows.h included
+  borland by default. Relies on windows libraries not available on linux, e.g. directx
 
 - Direct Draw Lib is deprecated and might need to be replaced
-  - e.g. OpenGL, just use Java
-  - Also figure out how to link zlib and png on mingw
+  - e.g. OpenGL, just use Java's libgdx, or godot or something
+  - Also figure out how to link zlib and png on mingw using C so we
+    can extract raw client assets
+
+- Overall the code is a mess.  Lots of declarations in C files and definitions in
+  other C files
+
+- Could use a good clang-format
+
+- The term "ppd" comes up a lot, this is "persistant player data", anything related to a player
+  that should be persisted but (I think) is not part of a player directly. E.g., the last time
+  they picked a given flower.

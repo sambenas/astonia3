@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_BOOK_H_
+#define _ASTONIA_BOOK_H_
+
 #define BOOK_LOISAN1	0
 #define BOOK_LOISAN2	1
 #define BOOK_SUPERIOR1	2
@@ -59,3 +62,4 @@ Added RCS tags
 #define BOOK_LAB2_DIARY         100
 #define BOOK_LAB2_DIARY_PAGE    101
 
+#endif

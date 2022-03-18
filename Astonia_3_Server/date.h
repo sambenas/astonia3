@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_DATE_H_
+#define _ASTONIA_DATE_H_
+
 extern int dlight;
 
 extern int newmoon;
@@ -48,3 +51,5 @@ extern int realtime;	// seconds realtime since beginning of our epoch
 
 void tick_date(void);
 void showtime(int cn);
+
+#endif

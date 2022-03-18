@@ -12,6 +12,9 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_STORE_H_
+#define _ASTONIA_STORE_H_
+
 #define MAXSTORE	64
 #define STORESIZE	(INVENTORYSIZE)
 
@@ -40,3 +43,5 @@ int buy(int cn,int co);
 int create_store(int cn,int ignore,int pricemulti);
 void player_store(int cn,int nr,int flag,int fast);
 int add_special_store(int cn);
+
+#endif

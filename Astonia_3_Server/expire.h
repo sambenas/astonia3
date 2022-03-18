@@ -12,5 +12,10 @@ Added RCS tags
 
 */
 
+#ifndef _ASTONIA_EXPIRE_H_
+#define _ASTONIA_EXPIRE_H_
+
 int set_expire(int in,int duration);
 int set_expire_body(int in,int duration);
+
+#endif
